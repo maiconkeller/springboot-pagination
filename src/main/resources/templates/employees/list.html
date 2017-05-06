@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/default">
+<head>
+	<title>Employees</title>
+</head>
+<body>
+
+	<section layout:fragment="conteudo">
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="text-center">ID</th>
+					<th class="text-center">NAME</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee : ${employeesPage.content}">
+					<td class="text-center" th:text="${employee.id}"></td>
+					<td class="text-center" th:text="${employee.name}"></td>
+				</tr>
+				<tr>
+					<td>
+						<button id="pageInfo" class="btn btn-link" style="margin-top:5px;" title="Page information"
+							data-toggle="modal" data-target=".bs-example-modal-sm">
+							<span style="font-size:20px;" class="glyphicon glyphicon-info-sign"></span>
+						</button>						
+					</td>
+					<td colspan="1" class="text-right">
+						<nav aria-label="Page navigation" style="margin: -15px 0px -20px 0;">
+							<ul class="pagination">
+								<li>
+									<a th:href="@{/employees?page={num}(num=${employeesPage.number-1}) }" aria-label="Previous" th:if="${!employeesPage.first}"> 
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li th:each="number : ${#numbers.sequence(0,employeesPage.totalPages-1)}">
+									<a th:href="@{/employees?page={num}(num=${number}) }" th:text="${number}"></a>
+								</li>
+								<li>
+									<a th:href="@{/employees?page={num}(num=${employeesPage.number+1}) }" aria-label="Next" th:if="${!employeesPage.last}"> 
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>		
+		<script type="text/javascript">
+			$('#pageInfo').tooltip();
+		</script>
+		
+		
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+			    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			    		<h4 class="modal-title" id="gridSystemModalLabel">Page Information</h4>
+			    	</div>
+			    	<div class="modal-body">
+        				<div class="row">
+        					<div class="col-md-12">
+        						Page: <span th:text="${employeesPage.number}"></span>
+        					</div>
+							<div class="col-md-12">
+								Total Pages: <span th:text="${employeesPage.totalPages}"></span>
+							</div>
+							<div class="col-md-12">
+								Total Elements: <span th:text="${employeesPage.totalElements}"></span>
+							</div>
+        					<div class="col-md-12">
+        						Page Size: <span th:text="${employeesPage.size}"></span>
+        					</div>
+        					<div class="col-md-12">
+        						Sort By: <span th:text="${employeesPage.sort}"></span>
+        					</div>
+        					<div class="col-md-12">
+        						First: <span th:text="${employeesPage.first}"></span>
+        					</div>
+        					<div class="col-md-12">
+        						Last: <span th:text="${employeesPage.last}"></span>
+        					</div>
+        					<div class="col-md-12">
+        						Number of Elements: <span th:text="${employeesPage.numberOfElements}"></span>
+        					</div>
+							
+        				</div>
+        			</div>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+
+
+</body>
+</html>
