@@ -37,7 +37,7 @@
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
-								<li th:each="number : ${#numbers.sequence(0,employeesPage.totalPages-1)}" th:classAppend="${number==employeesPage.number}?'active':''">
+								<li th:each="number : ${#numbers.sequence(0,employeesPage.totalPages-1)}" th:classAppend="${number==employeesPage.number}?'active':''"> 
 									<a th:href="@{/employees?page={num}(num=${number}) }" th:text="${number}"></a>
 								</li>
 								<li>
